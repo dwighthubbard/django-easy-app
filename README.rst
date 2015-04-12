@@ -11,11 +11,12 @@ Here are some steps for getting things going
 
 Set up a new django project
 ---------------------------
-django-admin startapp *project_name*
+Create a new python project using the django admin command like this::
 
-Example:
+    django-admin startapp *project_name*
 
-.. code-block::
+Example::
+
     django-admin startproject foo
 
 
