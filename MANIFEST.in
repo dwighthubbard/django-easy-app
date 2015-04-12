@@ -1,0 +1,5 @@
+# metadata
+include README.rst
+include README.md
+
+include django_easy_app/package_metadata.json
