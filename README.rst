@@ -19,7 +19,6 @@ Example::
 
     django-admin startproject foo
 
-
 Add django-easy-app to INSTALLED_APPS
 -------------------------------------
 
@@ -57,7 +56,6 @@ app.  This should not include the app name.
 So for example fooapp.view.ExampleView below has a route value of '' which
 will cause it to be accessible at http://hostname:port/fooapp/
 
-Example:
 .. code-block:: python
 
     from django.http import HttpResponse
