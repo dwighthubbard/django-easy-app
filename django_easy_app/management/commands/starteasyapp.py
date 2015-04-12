@@ -80,7 +80,10 @@ class Command(BaseCommand):
         parser.add_argument('appname', nargs='+')
 
     def handle(self, *args, **options):
-        appname = args[0]
+        if len(args):
+            appname = args[0]
+        else:
+            appname = options['appname']
         call_command('startapp', appname)
         with open(os.path.join(appname, 'urls.py'), 'w') as fh:
             fh.write(basic_urls_py)
