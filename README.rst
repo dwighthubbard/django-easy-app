@@ -26,8 +26,7 @@ Add django-easy-app to INSTALLED_APPS
 Extend the project urls.py
 --------------------------
 
-Add the following two lines to the end of the project urls.py module.
-
+Add the following two lines to the end of the project urls.py module:
 .. code-block:: python
 
     from django_easy_app.urlmanager import app_urlpatterns
@@ -39,9 +38,11 @@ Use manage.py to create a new django-easy-app enabled project.
 
 python manage.py starteasyapp *app_name*
 
+Example
 .. code-block::
 
     django-admin starteasyapp fooapp
+
 
 Create views
 ------------
@@ -55,7 +56,8 @@ app.  This should not include the app name.
 So for example fooapp.view.ExampleView below has a route value of '' which
 will cause it to be accessible at http://hostname:port/fooapp/
 
-.. example::
+Example:
+.. code-block:: python
 
     from django.http import HttpResponse
     from django.views.generic import View
