@@ -83,7 +83,8 @@ class Command(BaseCommand):
         if len(args):
             appname = args[0]
         else:
-            appname = options['appname']
+            appname = options['appname'][0]
+        self.stdout.write('Creating easyapp named: %s', appname)
         call_command('startapp', appname)
         with open(os.path.join(appname, 'urls.py'), 'w') as fh:
             fh.write(basic_urls_py)
