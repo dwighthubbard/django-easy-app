@@ -27,6 +27,7 @@ Extend the project urls.py
 --------------------------
 
 Add the following two lines to the end of the project urls.py module:
+
 .. code-block:: python
 
     from django_easy_app.urlmanager import app_urlpatterns
@@ -34,12 +35,11 @@ Add the following two lines to the end of the project urls.py module:
 
 Create a new django-easy-app enabled project
 --------------------------------------------
-Use manage.py to create a new django-easy-app enabled project.
+Use manage.py to create a new django-easy-app enabled project::
 
-python manage.py starteasyapp *app_name*
+    python manage.py starteasyapp *app_name*
 
-Example
-.. code-block::
+Example::
 
     django-admin starteasyapp fooapp
 
