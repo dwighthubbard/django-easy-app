@@ -26,7 +26,10 @@ args = {
     'author_email': 'd@d-h.us',
     'url': 'https://github.com/dwighthubbard/django-easy-app',
     'license': 'BSD',
-    'packages': ['django_easy_app'],
+    'packages': [
+        'django_easy_app', 'django_easy_app.management',
+        'django_easy_app.management.commands'
+    ],
     'description': 'Extend django-admin to create apps that are easier to set',
     'install_requires': ['django'],
     'requires': ['django'],
