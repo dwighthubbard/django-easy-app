@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.utils.importlib import import_module
+from django.views.generic import View
+import inspect
 import logging
 
 
@@ -30,3 +32,40 @@ def app_urlpatterns():
                 except ImportError:
                     pass
     return urlpatterns
+
+
+def project_urlpatterns(view_module, base_url_path=None):
+    """
+    Iterates a view module for class based views that have a "route" attribute
+    and use it to create a url patter.
+    :param view_module:
+    :param base_url_path:
+    :return: list urlpatterns
+    """
+    view_name = '.'.join(view_module.__name__.split('.')[:-1])
+    view_patterns = []
+    for module_name, module_class in inspect.getmembers(
+            view_module, inspect.isclass
+    ):
+        if issubclass(module_class, View):
+            logger.debug('Found module: %s', module_name)
+            if hasattr(module_class, 'route'):
+                logger.debug(
+                    'Module %s has route attribute of %r',
+                    module_class, module_class.route
+                )
+                regex = '^{0}$'.format(module_class.route)
+                arguments = inspect.getargspec(module_class.get).args
+                arguments.remove('self')
+                arguments.remove('request')
+                if arguments:
+                    pass
+                else:
+                    view_patterns.append(
+                        url(
+                            regex,
+                            module_class.as_view(),
+                            name=module_name
+                        )
+                    )
+    return view_patterns

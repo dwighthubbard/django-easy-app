@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+"""
+Easily Creates django programs/apps
+"""
+import argparse
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers()
+    startproject_parser = subparsers.add_parser('startproject', help='Start a new django-easy project')
+    startapp_parser = subparsers.add_parser('startapp', help='Start a new django-easy app')
+    startproject_parser.add_argument("projectname")
+    startproject_parser.add_argument("--startapp", default=None)
+    startapp_parser.add_argument('appname')
+    parser.parse_args()
+    print(parser)
+
+
+def main():
+    argument = parse_arguments()
+    print(argument.type)
+
+    # Create project
+
+    # Add app to INSTALLED_APPS
+
+    # Add app_url_patterns() to the end of the project urls.py
+
+    # Start easyproject project
+
+    # Add setup.py to app parent directory
+
+    # Add Manifest.in to app parent directory
+
+
+
+if __name__ == '__main__':
+    main()
