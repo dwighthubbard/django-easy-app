@@ -13,13 +13,30 @@ BASEPATH = os.path.dirname(os.path.abspath(__file__))
 
 
 def readme():
+    """
+    Return the data from the README file in the current directory
+    :return:
+    """
     with open('README.rst') as f:
         return f.read()
 
 
+def scripts():
+    """
+    Return a list of script files in the scripts directory
+    :return:
+    """
+    script_list = []
+    if os.path.isdir('scripts'):
+        script_list = [
+            os.path.join('scripts', f) for f in os.listdir('scripts')
+        ]
+    return script_list
+
+
 # Create a dictionary of our arguments, this way this script can be imported
 #  without running setup() to allow external scripts to see the setup settings.
-args = {
+setup_arguments = {
     'name': 'django-easy-app',
     'version': '0.0.1',
     'author': 'Dwight Hubbard',
@@ -62,7 +79,6 @@ args = {
     },
     'include_package_data': True,
 }
-setup_arguments = args
 
 
 class Git(object):
@@ -140,7 +156,12 @@ def get_and_update_metadata():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
 
+    # Update the setup arguments with our version number
     metadata = get_and_update_metadata()
     setup_arguments['version'] = metadata['version']
+
+    # Add any scripts that should be part of the package
+    if scripts():
+        setup_arguments['scripts'] = scripts()
 
     setup(**setup_arguments)
