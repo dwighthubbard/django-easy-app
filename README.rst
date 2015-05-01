@@ -68,9 +68,10 @@ Make sure each view that should be accessible from the web has a `*route*`
 attribute that contains the part of the url that should be associated with the
 view.  This should not include any other part of the url.
 
-So for example foo_app.view.ExampleView below has a route value of `''` which
-will cause it to be accessible at http://hostname:portnumber/appname/classroute
-for the project created in the previous example.  The URL when running runserver
+So for example foo_app.view.ExampleView below has a route value of `''` (empty
+string) which will cause it to be accessible at 
+http://hostname:portnumber/appname/classroute/ for the project created in the 
+previous example.  The URL when running runserver
 would be http://localhost:8000/foo_app/
 
 .. code-block:: python
