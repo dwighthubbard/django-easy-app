@@ -2,36 +2,143 @@
 """
 Easily Creates django programs/apps
 """
-import argparse
+from argparse import ArgumentParser
+from django.core.management import call_command
+import os
+import sys
+
+add_to_settings_comment = '# Add django-easy-app to INSTALLED_APPS'
+add_to_settings = """
+{comment}
+INSTALLED_APPS = list(INSTALLED_APPS)
+INSTALLED_APPS.append('django_easy_app')
+if '{app}':
+    import sys
+    try:
+        if sys.version_info.major < 3:
+            import imp
+            imp.find_module('{app}')
+        else:
+            import importlib
+            importlib.find_loader('{app}')
+        INSTALLED_APPS.append('{app}')
+    except ImportError:
+        pass
+INSTALLED_APPS = tuple(INSTALLED_APPS)
+"""
+add_to_project_urls_comment = '# Have django-easy-app add enabled views'
+add_to_project_urls = """
+{comment}
+from django_easy_app.urlmanager import app_urlpatterns
+urlpatterns += app_urlpatterns()
+"""
 
 def parse_arguments():
-    parser = argparse.ArgumentParser()
+    expected_attributes = ['projectname', 'appname']
+
+    parser = ArgumentParser()
     subparsers = parser.add_subparsers()
-    startproject_parser = subparsers.add_parser('startproject', help='Start a new django-easy project')
-    startapp_parser = subparsers.add_parser('startapp', help='Start a new django-easy app')
-    startproject_parser.add_argument("projectname")
-    startproject_parser.add_argument("--startapp", default=None)
-    startapp_parser.add_argument('appname')
-    parser.parse_args()
-    print(parser)
+    startproject_parser = subparsers.add_parser(
+        'startproject',
+        help='Start a new django-easy project'
+    )
+    startapp_parser = subparsers.add_parser(
+        'startapp',
+        help='Start a new django-easy app'
+    )
+    startproject_parser.add_argument(
+        "projectname", help='Create a new django project'
+    )
+    startproject_parser.add_argument(
+        "appname", default='', help='Create a new django application'
+    )
+    # startproject_parser.add_argument("--startapp", default=None)
+    startapp_parser.add_argument(
+        'appname', help='Create a new easydjango application'
+    )
+    args = parser.parse_args()
+    for attr in expected_attributes:
+        if not hasattr(args, attr):
+            setattr(args, attr, None)
+    return args
+
+
+def update_project_settings_py(project_name, app_name=None):
+    """
+    Add django-easy-app to the settings.py for a project
+    """
+    # Add app to INSTALLED_APPS
+
+    settings_file = os.path.join(project_name, 'settings.py')
+    if not os.path.exists(settings_file):
+        settings_file = os.path.join(project_name, settings_file)
+    settings_data = None
+    with open(settings_file, 'U') as settings_handle:
+        settings_data = settings_handle.read()
+
+    if settings_data and add_to_settings_comment not in settings_data:
+        context = {
+            'comment': add_to_settings_comment,
+            'app': ''
+        }
+        if app_name:
+            context['app'] = app_name
+
+        settings_data += add_to_settings.format(**context)
+
+    with open(settings_file, 'w') as settings_handle:
+        settings_handle.write(settings_data)
+
+
+def update_project_urls_py(project_name):
+    """
+    Update a django project's urls py to use django_easy
+    """
+    urls_file = os.path.join(project_name, 'urls.py')
+    if not os.path.exists(urls_file):
+        urls_file = os.path.join(project_name, urls_file)
+    urls_data = None
+    with open(urls_file, 'U') as settings_handle:
+        urls_data = settings_handle.read()
+
+    if urls_data and add_to_project_urls_comment not in urls_data:
+        urls_data += add_to_project_urls.format(**{'comment': add_to_project_urls_comment})
+
+    with open(urls_file, 'w') as urls_handle:
+        urls_handle.write(urls_data)
+
+
+def create_project(project_name, app_name=None):
+    """
+    Create a django easy app project
+    """
+    call_command('startproject', project_name)
+    update_project_settings_py(project_name, app_name)
+    update_project_urls_py(project_name)
+    
+
+def create_app(app_name):
+    """
+    Create an easy django app
+    """
+    os.system('%s ./manage.py starteasyapp %s' % (sys.executable, app_name))
 
 
 def main():
     argument = parse_arguments()
-    print(argument.type)
 
     # Create project
-
-    # Add app to INSTALLED_APPS
-
-    # Add app_url_patterns() to the end of the project urls.py
+    if argument.projectname:
+        create_project(argument.projectname, argument.appname)
+        os.chdir(argument.projectname)
+        create_app(argument.appname)
+        os.chdir('..')
 
     # Start easyproject project
 
     # Add setup.py to app parent directory
 
     # Add Manifest.in to app parent directory
-
 
 
 if __name__ == '__main__':

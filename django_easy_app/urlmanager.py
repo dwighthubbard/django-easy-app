@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def app_urlpatterns():
     """
     Iterate through the django INSTALLED_APPS and return a list of urlpatterns
-    for any apps that support easydjango.
+    for any apps that support django-easy-app.
     :return:
     """
     urlpatterns = []
@@ -35,7 +35,7 @@ def app_urlpatterns():
     return urlpatterns
 
 
-def project_urlpatterns(view_module, base_url_path=None):
+def view_urlpatterns(view_module, base_url_path=None):
     """
     Iterates a view module for class based views that have a "route" attribute
     and use it to create a url patter.
@@ -70,26 +70,3 @@ def project_urlpatterns(view_module, base_url_path=None):
                         )
                     )
     return view_patterns
-
-
-
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
-
-
-def updated_app_urlpatterns(urlpatterns):
-    urlpatterns = list(urlpatterns)
-    for app in settings.INSTALLED_APPS:
-        try:
-            _view_module = import_module('%s.views' % app)
-        except ImportError:
-            _view_module = None
-
-        if _view_module and getattr(_view_module, 'easydjango', False):
-            logger.debug('Adding urls for %s module', app)
-            try:
-                _module = import_module('%s.urls' % app)
-                urlpatterns.append(url(r'^%s/' % app, include(_module)))
-            except ImportError:
-                pass
-    return urlpatterns

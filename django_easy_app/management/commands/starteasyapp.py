@@ -10,10 +10,28 @@ class DJangoEasyAppError(Exception):
 
 urls_addition = """
 # Added by django_easy_app
-from django_easy_app.urlmanager import app_urlpatterns
-urlpatterns += app_urlpatterns()
+from . import views
+from django_easy_app.urlmanager import view_urlpatterns
+urlpatterns += view_urlpatterns(views)
 """
+views_addition = """
+# Added by django_easy_app
+from django.http import HttpResponse
+from django.views.generic import View
 
+
+easydjango = True
+
+
+class ExampleView(View):
+    # This is the part of the url after the appname in the url
+    route=''
+
+    # This method returns html from a get request
+    def get(self, request):
+        name = request.GET.get('name', 'World!')
+        return HttpResponse('Hello %s' % name)
+"""
 
 class Command(BaseCommand):
     help = 'Creates a django application that allows for creating class based '
@@ -33,24 +51,31 @@ class Command(BaseCommand):
         call_command('startapp', appname)
         urls_filename = os.path.join(appname, 'urls.py')
         views_filename = os.path.join(appname, 'views.py')
-        urls_data = None
-        views_data = None
+        urls_data = """from django.conf.urls import url
+
+urlpatterns = []
+        """
+        views_data = ''
 
         # Read in the source files
-        with open(urls_filename) as urls_file:
-            urls_data = urls_file.read()
-        with open(views_filename) as views_file:
-            views_data = views_file.read()
 
-        if not urls_data or not views_data:
-            raise DJangoEasyAppError(
-                'Unable to find the application source file'
-            )
+        if os.path.exists(urls_filename):
+            with open(urls_filename) as urls_file:
+                urls_data = urls_file.read()
+        if os.path.exists(views_filename):
+            with open(views_filename) as views_file:
+                views_data = views_file.read()
 
         # Add our integration
         urls_data += urls_addition
+
+        views_data += views_addition
 
         # Write out the updated files
         if urls_data:
             with open(urls_filename, 'w') as urls_file:
                 urls_file.write(urls_data)
+
+        if os.path.exists(views_filename):
+            with open(views_filename, 'w') as views_file:
+                views_file.write(views_data)

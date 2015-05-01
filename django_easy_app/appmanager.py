@@ -23,3 +23,4 @@ def updated_app_urlpatterns(urlpatterns):
             except ImportError:
                 pass
     return urlpatterns
+
