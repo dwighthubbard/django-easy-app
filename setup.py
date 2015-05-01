@@ -44,7 +44,8 @@ setup_arguments = {
     'url': 'https://github.com/dwighthubbard/django-easy-app',
     'license': 'BSD',
     'packages': [
-        'django_easy_app', 'django_easy_app.management',
+        'django_easy_app', 
+        'django_easy_app.management',
         'django_easy_app.management.commands'
     ],
     'description': 'Extend django-admin to create apps that are easier to set',
