@@ -13,7 +13,7 @@ Set up a new django project
 ---------------------------
 Create a new python project using the django_easy command like this::
 
-    django_easy startproject *project_name* *app_name*
+    django_easy startproject **project_name** **app_name**
 
 Example::
 
@@ -40,7 +40,6 @@ Example::
     └── manage.py
 
     3 directories, 14 files
-    (py27)dwight@lappy:/tmp$
 
 Create views
 ------------
