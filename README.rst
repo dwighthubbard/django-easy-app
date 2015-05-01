@@ -13,8 +13,8 @@ it has features that do the following:
   possible to write and use class based views without needing
   to understand regular expressions and seperately update the 
   urls.py.
-* Adds a starteasyapp command to manage.py to allow for easily
-    creating additional django-easy-app enabled django apps.
+* Adds a *starteasyapp* command to manage.py to allow for easily
+  creating additional django-easy-app enabled django apps.
     
 Quickstart
 ==========
