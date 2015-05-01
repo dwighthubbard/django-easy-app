@@ -13,7 +13,7 @@ Set up a new django project
 ---------------------------
 Create a new python project using the django_easy command like this::
 
-    django_easy startproject **project_name app_name**
+    django_easy startproject project_name app_name
 
 Example::
 
