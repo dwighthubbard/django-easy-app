@@ -35,11 +35,11 @@ Create a new python project using the django_easy command like this::
 
 Example::
 
-    $ django_easy startproject foo_project foo_app
-    Creating easyapp named: foo_app
+    $ django_easy startproject foo_project foo
+    Creating easyapp named: foo
     $ tree foo_project
     foo_project
-    ├── foo_app
+    ├── foo
     │   ├── admin.py
     │   ├── __init__.py
     │   ├── migrations
