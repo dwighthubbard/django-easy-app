@@ -46,9 +46,9 @@ Create views
 In the views.py file define a variable named "easydjango" and set the value
 to true.
 
-Make sure each view that should be accessible from the web has a *route*
+Make sure each view that should be accessible from the web has a `*route*`
 attribute that contains the part of the url that should be associated with the
-app.  This should not include the app name.
+view.  This should not include any other part of the url.
 
 So for example foo_app.view.ExampleView below has a route value of '' which
 will cause it to be accessible at http://hostname:port/foo_app/
