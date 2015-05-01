@@ -1,13 +1,28 @@
 django-easy-app
 ***************
 
-This is a django app that allows for extending the django url processing to
-allow for defining url routing as part of a django Class based view.
+This is a django app that trys to simplify using django.  Currently
+it has features that do the following:
 
+* An *easy_app* script that allows for creating new django projects
+  that are set up with the djang0-easy-app functionality.
+* A django-easy-app django app has the following functionality
+  that simplify using django.
+  * The ability to specify the url routing using a new "route" 
+    attribute on django class based view classes.  This akes it
+    possible to write and use class based views without needing
+    to seperately update the urls.py.
+  * Adds a starteasyapp command to manage.py to allow for easily
+    creating additional django-easy-app enabled django apps.
+    
 Quickstart
 ==========
 
 Here are some steps for getting things going
+
+Install django-easy-app
+-----------------------
+pip install django-easy-app
 
 Set up a new django project
 ---------------------------
