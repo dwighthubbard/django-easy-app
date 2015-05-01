@@ -23,6 +23,9 @@ Here are some steps for getting things going
 
 Install django-easy-app
 -----------------------
+Once django-easy-app has been packaged it will be installable
+using pip as follows::
+
   pip install django-easy-app
 
 Set up a new django project
