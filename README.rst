@@ -23,7 +23,7 @@ Here are some steps for getting things going
 
 Install django-easy-app
 -----------------------
-pip install django-easy-app
+  pip install django-easy-app
 
 Set up a new django project
 ---------------------------
